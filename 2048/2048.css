@@ -1,0 +1,99 @@
+    * {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    h1 {
+        margin: 50px;
+        width: 416px;
+        text-align: center;
+        font-family: '微软雅黑';
+        font-weight: bolder;
+    }
+
+    #list li {
+        width: 100px;
+        height: 100px;
+        list-style: none;
+        text-align: center;
+        line-height: 100px;
+        border-collapse: collapse;
+        float: left;
+        font-family: '微软雅黑';
+        font-size: 30px;
+        border-radius: 5px;
+        margin: 5px;
+        font-weight: bolder;
+    }
+
+    #list {
+        width: 440px;
+        height: 440px;
+        margin: 50px;
+        background-color: #baa;
+        border-radius: 8px;
+        padding: 5px;
+    }
+
+    .number {
+        color: #766;
+        background-color: #dcb;
+    }
+
+    .number2 {
+        color: #766;
+        background-color: #eee;
+    }
+
+    .number4 {
+        color: #766;
+        background-color: #eec;
+    }
+
+    .number8 {
+        color: #ffe;
+        background-color: #fb8;
+    }
+
+    .number16 {
+        color: #ffe;
+        background-color: #f96;
+    }
+
+    .number32 {
+        color: #ffe;
+        background-color: #f75;
+    }
+
+    .number64 {
+        color:#ffe;
+        background-color:#f53
+    }
+
+    .number128 {
+        color: #766;
+        background-color:#ec7
+    }
+
+    .number256 {
+        color:#ffe;
+        background-color:#ec6;
+    }
+
+    .number512 {
+        color:#ffe;
+        background-color:#ec5;
+        font-size:45px
+    }
+
+    .number1024 {
+        color: #766;
+        background-color:#ec3
+    }
+
+    .number2048 {
+        color:#fff;
+        font-size:35px;
+        background-color:#ec2;
+
+    }

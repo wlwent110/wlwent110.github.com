@@ -50,9 +50,8 @@
     </footer>
 </div>
 <script>
-
-
-    var ref = new Wilddog("https://danmu-app.wilddogio.com");
+     var i1=0;
+    var ref = new Wilddog("https://danmu-wl.wilddogio.com");
     var _wall = $('.wall');   // 墙壁
     var _input = $('input');  // 输入框
 
@@ -62,8 +61,8 @@
             return ;
         }
 
-        var danmu = $('<span class="danmu">' + _input.val() + '</span>');
-
+        var danmu = $('<span class="danmu1">' + _input.val() + '</span>');
+        i1++;
         var font_size = Number(Math.random() * 20 + 14);
 
         var color = [
