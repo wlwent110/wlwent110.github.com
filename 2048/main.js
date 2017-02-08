@@ -1,7 +1,9 @@
+var span=document.querySelector('span');
 var list = new Vue ({
     el:'.container',
     data:{
-        array:["","","","","","","","","","","","","","","",""]
+        array:["","","","","","","","","","","","","","","",""],
+        scroe:[0]
     },
     mounted:function () {
         window.addEventListener('keydown', function (e) {
@@ -47,16 +49,30 @@ var list = new Vue ({
         logic:function (arr) {
             var isMove = false;
             for (var j = 0; j < 4; j++) {
-                //如果除了第一个以外，第二个开始只要没有值就会把第一个移动到第二个，循环如果第三个没有值就把第二个移动到第三个
+                //如果除了第一个以外，第二个开始只要没有值且之前一个有值，就会把第一个移动到第二个，循环如果第三个没有值就把第二个移动到第三个
                 for (var i = 0; i < 4; i++) {
                     if (!list.array[arr[j][i]] && list.array[arr[j][i-1]]&& i > 0) {
                         Vue.set(list.array, arr[j][i], list.array[arr[j][i-1]]);
                         Vue.set(list.array, arr[j][i-1], "");
                         isMove = true;
                     }
+                    //如果第前一个和后一个值相等，则相加
+                    if(list.array[arr[j][i]]){
+                        if(list.array[arr[j][i]]== list.array[arr[j][i-1]]){
+
+                            list.scroe[0]+=list.array[arr[j][i]]+ list.array[arr[j][i-1]];
+                            Vue.set(list.array, arr[j][i], list.array[arr[j][i]] + list.array[arr[j][i-1]]);
+                            span.innerText='你的得分是：'+list.scroe[0];
+
+                            Vue.set(list.array, arr[j][i-1], "");
+
+                            isMove = true;
+                        }
+                    }
+
                 }
                 //如果除了第一个以外，第二个开始只要没有值就会把第一个移动到第二个
-                for (var i =0; i < 4; i++) {
+               /* for (var i =0; i < 4; i++) {
                     if (!list.array[arr[j][i]] && list.array[arr[j][i-1]]&& i > 0) {
                         Vue.set(list.array, arr[j][i], list.array[arr[j][i-1]]);
                         Vue.set(list.array, arr[j][i-1], "");
@@ -76,7 +92,7 @@ var list = new Vue ({
                         Vue.set(list.array, arr[j][i-1], "");
                         isMove = true;
                     }
-                }
+                }*/
 
             }
             var isGameOver = list.check();
@@ -92,6 +108,7 @@ var list = new Vue ({
             if (list.array.indexOf(2048) >= 0) {
                 return 'success';
             } else if (list.array.indexOf("") < 0) {
+                /*
                 for (var i = 0; i < 16; i++) {
                     var top = i - 4,
                         right = i + 1,
@@ -104,7 +121,22 @@ var list = new Vue ({
                         return 'continue';
                     }
                 }
-                return 'over';
+                return 'over';*/
+                var b=[-4,4,-1,1];
+                    var flag=false;
+                for(var i=0;i<16;i++){
+                    for(var j=0;j<4;j++){
+                        if((i+b[j])>=0){
+                        if(list.array[i]==list.array[i+b[j]]){
+
+                            return 'continue';
+                        }
+                        }
+                    }
+                }
+                if(!flag){
+                    return 'over';
+                }
             }
         },
         down:function () {
