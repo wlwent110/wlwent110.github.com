@@ -3,8 +3,10 @@
         margin: 0px;
     }
 
+
     h1 {
         margin: 30px;
+
         width: 416px;
         text-align: center;
         font-family: '微软雅黑';
@@ -101,4 +103,51 @@ span{
         font-size:35px;
         background-color:#ec2;
 
+    }
+    body {
+        padding: 10px 60px 60px 60px;
+
+    }
+
+    .csshub-wrap {
+        height: 100px;
+        width: 200px;
+    }
+
+    .csshub-button {
+        background-color: transparent;
+        border: 2px solid #1ECD97;
+        border-radius: 4px;
+        display: inline-block;
+        text-decoration: none!important;
+        color: #1ECD97;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        height: 40px;
+        line-height: 40px;
+        letter-spacing: 1px;
+        margin: 5px;
+        overflow: hidden;
+        padding: 0 22px;
+        text-align: center;
+        text-transform: uppercase;
+        transition: all .2s ease-in-out;
+    }
+    .csshub-button:hover {
+        background-color: #1ECD97;
+    }
+
+    .csshub-roll-text {
+        display: block;
+        position: relative;
+        transition: all 420ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .csshub-roll-text:last-child {
+        color: #fff;
+    }
+
+    .csshub-rollover:hover .csshub-roll-text:first-child {
+        margin-top: -38px;
     }
