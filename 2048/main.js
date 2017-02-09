@@ -15,8 +15,6 @@ var list = new Vue ({
                 list.right();
             } else if (e.keyCode == 40) {
                 list.down();
-            } else {
-                console.log("error");
             }
         });
     },
@@ -71,28 +69,7 @@ var list = new Vue ({
                     }
 
                 }
-                //如果除了第一个以外，第二个开始只要没有值就会把第一个移动到第二个
-               /* for (var i =0; i < 4; i++) {
-                    if (!list.array[arr[j][i]] && list.array[arr[j][i-1]]&& i > 0) {
-                        Vue.set(list.array, arr[j][i], list.array[arr[j][i-1]]);
-                        Vue.set(list.array, arr[j][i-1], "");
-                        isMove = true;
-                    }
-                }
-                for (var i = 3; i >= 0; i--) {
-                    if (list.array[arr[j][i]] && list.array[arr[j][i]] == list.array[arr[j][i-1]]) {
-                        Vue.set(list.array, arr[j][i], list.array[arr[j][i]] + list.array[arr[j][i-1]]);
-                        Vue.set(list.array, arr[j][i-1], "");
-                        isMove = true;
-                    }
-                }
-                for (var i =0; i < 4; i++) {
-                    if (!list.array[arr[j][i]] && list.array[arr[j][i-1]]&& i > 0) {
-                        Vue.set(list.array, arr[j][i], list.array[arr[j][i-1]]);
-                        Vue.set(list.array, arr[j][i-1], "");
-                        isMove = true;
-                    }
-                }*/
+
 
             }
             var isGameOver = list.check();
@@ -108,31 +85,20 @@ var list = new Vue ({
             if (list.array.indexOf(2048) >= 0) {
                 return 'success';
             } else if (list.array.indexOf("") < 0) {
-                /*
-                for (var i = 0; i < 16; i++) {
-                    var top = i - 4,
-                        right = i + 1,
-                        bottom = i + 4,
-                        left = i - 1;
-                    if ((top >= 0 && list.array[top] == list.array[i]) ||
-                    (left >= 0 && list.array[left] == list.array[i] && i % 4 != 0) ||
-                    (bottom <= 15 && list.array[bottom] == list.array[i]) ||
-                    (right <= 15 && list.array[right] == list.array[i] && i % 3 != 0 )) {
-                        return 'continue';
-                    }
-                }
-                return 'over';*/
+
                 var b=[-4,4,-1,1];
                     var flag=false;
+                out:
                 for(var i=0;i<16;i++){
                     for(var j=0;j<4;j++){
                         if((i+b[j])>=0){
                         if(list.array[i]==list.array[i+b[j]]){
-
-                            return 'continue';
+                            flag=true;
+                            break out;
                         }
                         }
                     }
+
                 }
                 if(!flag){
                     return 'over';
