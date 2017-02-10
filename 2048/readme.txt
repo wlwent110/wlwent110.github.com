@@ -1,1 +1,0 @@
-https://github.com/janetleung/2048-vue
