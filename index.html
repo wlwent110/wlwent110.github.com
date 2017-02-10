@@ -3,143 +3,258 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
     <style>
-        .wall{
-            border: 1px solid #eeeeee;
-            margin: 10px 0px;
-            border: 2px solid #eeeeee;
-            border-radius: 4px;
-            height: 500px;
-            position:relative;
+        .shake{
+            width:102px;
+            height:40px;
+            display:block;
+            background:lightgreen;
+            border-radius:8%;
+            margin:5px;
+            color:#fff;
+
+            text-align:center;
+            line-height:40px;
+            cursor:pointer;
+            -webkit-transition:all 0.25s;
         }
-        .input-group-addon{
-            border-left: none;
+        .shake:hover{
+            -webkit-animation:shake 0.25s;
+            background: lightblue;
+        }
+        @-webkit-keyframes shake {
+            0%,10%,55%,90%,94%,98%,100%{
+                -webkit-transform:scale(1,1);
+            }
+            30%{
+                -webkit-transform:scale(1.14,0.86);
+            }
+            75%{
+                -webkit-transform:scale(0.92,1.08);
+            }
+            92%{
+                -webkit-transform:scale(1.04,0.96);
+            }
+            96%{
+                -webkit-transform:scale(1.02,0.98);
+            }
+            99%{
+                -webkit-transform:scale(1.01,0.99);
+            }
+        }
+        .content{
+            width: 273px;
+            height: 40px;
+            margin-left: 20px;
+            overflow: hidden;
+            border-radius:10px;
+            border: solid 1px #2aabd2;
+            padding-left:20px;
+            display: none;
+            background-color: #454dff;
+
+        }
+        .roll-text{
+            transition: all 1000ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 40px;
+            line-height: 40px;
+
+        }
+        .search{
+            width:100px;
+            height:30px;
+            border-radius:10px;
+            border:2px solid lightblue;
+
+            right:200px;
+            outline:none;
+            text-indent:12px;
+            color:#666;
+            font-size:12px;
+            padding:0;
+            -webkit-transition:width 0.5s;
+        }
+        .search:focus{
+            width:200px;
+        }
+        /* div{
+             position: relative;
+
+
+         }*/
+        .content:hover .roll-text:first-child{
+            margin-top:-40px;
+        }
+        input{
+            color: #aaa;
+        }
+        ul{
+            height: 32px;
+            margin-bottom:0;
+        }
+        ul li{
+            border: solid 1px #2aabd2;
+
+            list-style: none;
+            text-align: center;
+            height: 30px;
+            line-height: 30px;
+            float: left;
+            width: 100px;
+        }
+
+        .login{
             cursor: pointer;
+            padding: 10px;
+            border-radius:8%;
         }
-        .input-group-addon:hover{
-            background: white;
-            color: #555;
+
+        .login:hover{
+            -webkit-animation:shake 0.25s;
+            background: lightblue;
         }
+        .login-div{
+            display: inline-block;
+        }
+        .login-info{
+            display: none;
+        }
+        .list {
+            width:200px;
+            height:auto;
+            border: none;
+        }
+
+        .list a{
+            display: block;
+            padding: 5px 8px;
+            transition: all 0.6s;
+            color: #0a8cd2;
+            text-decoration: none;
+        }
+        .list li h1 {
+            font-size: 22px;
+            font-style: normal;
+            font-family: "Hiragino Sans GB", "Hiragino Sans GB W3", 微软雅黑;
+        }
+        .list li{list-style:decimal; line-height:50px;border-bottom: 1px solid #f2f2f2;}
+        .list li a:hover{text-indent:25px; border-radius:5px;color: #fff;text-shadow:0 2px 1px #360;background-color: #393;*background-color:#51a351;background-image:-moz-linear-gradient(top,#62c462,#51a351);background-image:-webkit-gradient(linear,0 0,0 100%,from(#62c462),to(#51a351));background-image:-webkit-linear-gradient(top,#62c462,#51a351);background-image:-o-linear-gradient(top,#62c462,#51a351);background-image:linear-gradient(to bottom,#62c462,#51a351);background-repeat:repeat-x;border-color:#51a351 #51a351 #387038;border-color:rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff62c462',endColorstr='#ff51a351',GradientType=0);filter:progid:DXImageTransform.Microsoft.gradient(enabled=false);text-decoration:none;}
+        .list li h1 a:hover{ border-radius:5px;color: #fff;text-shadow:0 2px 1px #360;background-color: #393;*background-color:#51a351;background-image:-moz-linear-gradient(top,#62c462,#51a351);background-image:-webkit-gradient(linear,0 0,0 100%,from(#62c462),to(#51a351));background-image:-webkit-linear-gradient(top,#62c462,#51a351);background-image:-o-linear-gradient(top,#62c462,#51a351);background-image:linear-gradient(to bottom,#62c462,#51a351);background-repeat:repeat-x;border-color:#51a351 #51a351 #387038;border-color:rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff62c462',endColorstr='#ff51a351',GradientType=0);filter:progid:DXImageTransform.Microsoft.gradient(enabled=false);text-decoration:none;}
+
     </style>
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.12.0/lodash.min.js"></script>
-    <script src="https://cdn.wilddog.com/js/client/current/wilddog.js"></script>
+
 
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <div class="wall">
-
-        </div>
-        <div class="btn-list">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="尽情的吐槽吧!">
-                <span class="input-group-addon" onclick="send()"  >发送</span>
-                <span class="input-group-addon" onclick="del()">清空</span>
-            </div>
-        </div>
+<div class="login-div">
+    <div class="shake login-info" style="width: 200px;height: 45px">
+        <span></span>
+        <span class="login ">退出</span>
     </div>
-    <footer class="text-center">
-        <hr>
-        <p>Written and coded by
-            <a href="https://github.com/bastarders" target="_blank" title="GitHub">Bastarder
-            </a>.</p>
-    </footer>
+    <ul>
+        <li class="anonymous-login  shake">匿名登录</li>
+        <li class="third-login  shake">第三方登录</li>
+    </ul>
+    <div class="content">
+        <div class="roll-text">这位蒙面大侠来留下你的脚印</div>
+        <div class="roll-text "><input class="search" type="text" value="请输入昵称"> <span class="login logon">登录</span></div>
+    </div>
 </div>
+<ol class="list">
+    <li class="list"><h1><a href="https://wlwent110.github.io/danmu/index.html">弹幕墙</a></h1></li>
+    <li class="list"><h1><a href="https://wlwent110.github.io/2048/new_2048.html">2048小游戏</a></h1></li>
+</ol>
 <script>
 
 
-    var ref = new Wilddog("https://danmu-wl.wilddogio.com");
-    var _wall = $('.wall');   // 墙壁
-    var _input = $('input');  // 输入框
 
-    function send(){
+    function saveUser(name){
 
-        if(!_input.val()){
-            return ;
+        if( localStorage.userName.indexOf(name)<0){
+            localStorage.userName+='~'+name;
+
         }
 
-        var danmu = $('<span class="danmu">' + _input.val() + '</span>');
+    }
 
-        var font_size = Number(Math.random() * 20 + 14);
+    var input=document.querySelector('input');
+    var span=document.querySelector('.logon');
+    var content=document.querySelector('.content');
+    var anonymousLogin=document.querySelector('.anonymous-login');
+    var ul=document.querySelector('ul');
+    var loginDiv=document.querySelector('.login-div');
+    var loginInfo=document.querySelector('.login-info');
+    var checkUser=function () {
+        if(localStorage.userName==undefined){
+            localStorage.userName='';
+        }
+        if(localStorage.userName.indexOf('~',1)==-1&&localStorage.userName.indexOf('~')==0){
 
-        var color = [
-            Number((Math.random() * 255).toFixed(0)),
-            Number((Math.random() * 255).toFixed(0)),
-            Number((Math.random() * 255).toFixed(0)),
-        ]
+            ul.style.display='none';
+            loginInfo.children[0].innerText=localStorage.userName.substring(1)+'大侠来啦';
+            loginInfo.style.display='block';
+        }
+        else {
+            loginInfo.style.display='none';
+            ul.style.display='block';
+        }
+    }
+    checkUser();
+    loginInfo.children[1].onclick=function (e) {
+        loginInfo.style.display='none';
+        ul.style.display='block';
 
-        danmu.css({
-            display : 'none',
-            'font-size': font_size,
-            color: 'rgb('+color[0]+','+color[1]+','+color[2]+')'
-        })
+    }
+    anonymousLogin.onclick=function (e) {
 
-        $('body').append(danmu);
+        content.style.display='block';
 
-        var top = Number((Math.random() * (490 - danmu.height())).toFixed(0));
-        var left = _wall.width() - danmu.width() - 10;
+        loginDiv.onmouseleave=function (e) {
+            setTimeout(function () {
+                if(!window.localStorage.username){
 
-        danmu.remove();
+                    content.style.display='none';
+                }
+            },1500)
 
-        var el = {
-            text : _input.val(),
-            css:{
-                position: 'absolute',
-                left: left,
-                top: top,
-                color: 'rgb('+color[0]+','+color[1]+','+color[2]+')',
-                'font-size': font_size
+
+        }
+    }
+    span.onclick=function (e) {
+        if(input.value!=='请输入昵称'&&input.value.match(/\S/g)){
+            saveUser(input.value);
+            loginInfo.children[0].innerText=input.value+'大侠来啦';
+            content.style.display='none';
+            input.value='';
+            ul.style.display='none';
+
+            loginInfo.style.display='block';
+        }
+
+
+    }
+
+    input.onfocus=function (e) {
+        document.onkeydown=function (e) {
+            if(e.keyCode=='13'){
+                span.click();
             }
         }
 
-        setValue(el);
-
-    }
-
-    ref.child("danmu").on("value", function(datasnapshot,error) {
-        if (error == null) {
-            console.log(datasnapshot.val());   // 结果会在 console 中打印出 "beijing"
+        if(e.target.value=='请输入昵称'){
+            e.target.value=''
+            e.target.style.color='#000';
         }
-
-        if(error){
-            return ;
+    }
+    input.onblur=function (e) {
+        if(e.target.value==''){
+            e.target.value='请输入昵称';
+            e.target.style.color='#aaa';
         }
-
-        var ele = datasnapshot.val();
-        var danmu = $('<span class="danmu">' + ele.text + '</span>');
-
-        danmu.css(ele.css);
-
-        _wall.append(danmu);
-
-        setInterval(function(){
-            var left = danmu.css('left').match(/^(\d+)px$/);
-            if(!left || !left[1]){
-                return ;
-            }
-            left = left[1];
-            if(left - 4 <= 0){
-                danmu.remove();
-            };
-            danmu.css('left',left - 4);
-        },50)
-
-    });
-
-    // 设置值;
-    function setValue(value){
-        ref.child('danmu').set(value);
     }
-
-    function del(){
-        $('.danmu').remove();
-    }
-
 
 </script>
+
 </body>
 </html>
