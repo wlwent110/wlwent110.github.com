@@ -144,7 +144,7 @@ var list = new Vue ({
     },
     created:function () {
         console.log("初始化");
-    },
+    }
 
 
 })
