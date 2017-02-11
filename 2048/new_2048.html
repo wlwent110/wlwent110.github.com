@@ -4,6 +4,56 @@
     <meta charset="UTF-8">
     <title></title>
     <style>
+        @-webkit-keyframes fadeOut{0%{opacity:1}100%{opacity:0}}@keyframes fadeOut{0%{opacity:1}100%{opacity:0}}.fadeOut{-webkit-animation-name:fadeOut;animation-name:fadeOut}
+        @-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@keyframes fadeIn{0%{opacity:0}100%{opacity:1}}.fadeIn{-webkit-animation-name:fadeIn;animation-name:fadeIn}
+        @-webkit-keyframes zoomIn{0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}50%{opacity:1}}@keyframes zoomIn{0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);-ms-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}50%{opacity:1}}.zoomIn{-webkit-animation-name:zoomIn;animation-name:zoomIn}
+        @-webkit-keyframes zoomOutDown{40%{opacity:1;-webkit-transform:scale3d(.475,.475,.475) translate3d(0,-60px,0);transform:scale3d(.475,.475,.475) translate3d(0,-60px,0);-webkit-animation-timing-function:cubic-bezier(0.55,.055,.675,.19);animation-timing-function:cubic-bezier(0.55,.055,.675,.19)}100%{opacity:0;-webkit-transform:scale3d(.1,.1,.1) translate3d(0,2000px,0);transform:scale3d(.1,.1,.1) translate3d(0,2000px,0);-webkit-transform-origin:center bottom;transform-origin:center bottom;-webkit-animation-timing-function:cubic-bezier(0.175,.885,.32,1);animation-timing-function:cubic-bezier(0.175,.885,.32,1)}}@keyframes zoomOutDown{40%{opacity:1;-webkit-transform:scale3d(.475,.475,.475) translate3d(0,-60px,0);-ms-transform:scale3d(.475,.475,.475) translate3d(0,-60px,0);transform:scale3d(.475,.475,.475) translate3d(0,-60px,0);-webkit-animation-timing-function:cubic-bezier(0.55,.055,.675,.19);animation-timing-function:cubic-bezier(0.55,.055,.675,.19)}100%{opacity:0;-webkit-transform:scale3d(.1,.1,.1) translate3d(0,2000px,0);-ms-transform:scale3d(.1,.1,.1) translate3d(0,2000px,0);transform:scale3d(.1,.1,.1) translate3d(0,2000px,0);-webkit-transform-origin:center bottom;-ms-transform-origin:center bottom;transform-origin:center bottom;-webkit-animation-timing-function:cubic-bezier(0.175,.885,.32,1);animation-timing-function:cubic-bezier(0.175,.885,.32,1)}}.zoomOutDown{-webkit-animation-name:zoomOutDown;animation-name:zoomOutDown}
+        .large.button { font-size: 30px; padding: 8px 10px 9px;
+            top:-10px;
+        }
+        .blue.button { background-color: #2daebf; }
+        .blue.button:hover { background-color: #007d9a;
+            top:0px;
+            box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7);
+            -moz-box-shadow:  1px 1px 8px rgba(0, 0, 0, 0.7);
+            -webkit-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7);
+            -o-box-shadow:  1px 1px 8px rgba(0, 0, 0, 0.7);
+            -ms-box-shadow:  1px 1px 8px rgba(0, 0, 0, 0.7); }
+        .button { background: #222 url(overlay-button.png) repeat-x 0 0; display: inline-block; padding: 5px 15px 6px; color: #fff !important; font-size: 13px; font-weight: 300; line-height: 1; text-decoration: none; -moz-border-radius: 5px; -webkit-border-radius: 5px; -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.25); -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.25); text-shadow: 0 -1px 1px rgba(0,0,0,0.25); border-bottom: 1px solid rgba(0,0,0,0.25); position: relative; cursor: pointer; overflow: visible; width: auto; }
+        button::-moz-focus-inner { border: 0; padding: 0; }
+
+        .button:hover { background-color: #111; color: #fff; }
+        .button:active { -webkit-transform: translateY(1px); -moz-transform: translateY(1px); }
+        *, :before, :after {
+            margin: 0;
+            padding: 0;
+            position: relative;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        .animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:both;animation-fill-mode:both}
+        #reStart,#result{
+            text-align: center;
+            display: none;
+            font-weight:500;
+
+
+        }
+        #result{
+            font-size: 60px;
+            margin-top: 80px;
+            color: #ff3b19;
+        }
+        #reStart:hover{
+            cursor: pointer;
+        }
+        .replay{
+            width: 100%;
+            position: fixed;
+            top: 20%;
+
+        }
 
         * {
             box-sizing: border-box;
@@ -53,6 +103,7 @@
             left: 0;
             right: 0;
         }
+
         /*位置*/
         .p00{left:0;top:0;} .p01{left:0; top:25%; } .p02{left:0; top:50%; } .p03{left:0; top:75%; } .p10{left:25%; top:0; } .p11{left:25%; top:25%; } .p12{left:25%; top:50%; } .p13{left:25%; top:75%; } .p20{left:50%; top:0; } .p21{left:50%; top:25%; } .p22{left:50%; top:50%; } .p23{left:50%; top:75%; } .p30{left:75%; top:0; } .p31{left:75%; top:25%; } .p32{left:75%; top:50%; } .p33{left:75%; top:75%; }
         /*颜色*/
@@ -80,16 +131,38 @@
     <div class="cell"></div>
     <div class="cell"></div>
 </div>
+<div class="replay">
+    <div>
+    <span id="reStart" >
+        <span class="site__title mega button large blue">
+            重来
+        </span>
+        </span>
+    </div>
+    <div style="display: block">
+    <span id="result" >
+        <span class="site__title mega" >
+            抱歉失败了噢
+        </span>
+        </span>
+    </div>
+</div>
+
+
+
+<button>开始</button>
+
 
 
 <script src="https://apps.bdimg.com/libs/jquery/1.8.1/jquery.min.js"></script>
 
 <script >
+    var state;
     var span=document.querySelector('#score');
     var list={
         array:["","","","","","","","","","","","","","","",""],
         place_arr:['00','10','20','30','01','11','21','31','02','12','22','32','03','13','23','33'],
-        old_arr:["","","","","","","","","","","","","","","",""],
+
         scroe:0,
 
         setnumber:function () {
@@ -162,9 +235,23 @@
             setTimeout(function () {
                 var isGameOver = list.check();
                 if (isGameOver == 'over') {
-                    alert('抱歉失败了噢~');
+
+                    state='抱歉失败了噢';
+                    res.children[0].style.color='#ff3b19'
+                    res.children[0].innerText=state;
+                    res.style.display='block';
+                    reStart.style.display='block';
+                    res.className='zoomIn animated';
+                    reStart.className='fadeIn animated';
+
                 } else if (isGameOver == 'success') {
-                    alert('恭喜成功啦！');
+                   state='恭喜成功啦！';
+                    res.children[0].style.color='78FF1D'
+                    res.children[0].innerText=state;
+                    res.style.display='block';
+                    reStart.style.display='block';
+                    res.className='zoomIn animated';
+                    reStart.className='fadeIn animated';
                 }
             },500)
         },
@@ -251,19 +338,75 @@
         $(".g2048").append(item);
     }
     window.addEventListener('keydown', function (e) {
-        if (e.keyCode == 37) {
-            list.left();
-        } else if (e.keyCode == 38) {
-            list.up();
-        } else if (e.keyCode == 39) {
-            list.right();
-        } else if (e.keyCode == 40) {
-            list.down();
+        if(state!=='抱歉失败了噢'){
+            if (e.keyCode == 37) {
+                list.left();
+            } else if (e.keyCode == 38) {
+                list.up();
+            } else if (e.keyCode == 39) {
+                list.right();
+            } else if (e.keyCode == 40) {
+                list.down();
+            }
         }
+
 
 
     });
 list.setnumber();
+</script>
+<script>
+
+
+    var res=document.querySelector('#result');
+    var reStart=document.querySelector('#reStart');
+
+    document.onclick=function (e) {
+
+        var e=e.target;
+
+
+        if(e.tagName=='BUTTON'){ list.scroe=0;
+            span.innerText='你的得分是：'+list.scroe;
+            var g2048=$('.g2048').children();
+            for(var i=16;i<g2048.length;i++){
+                g2048[i].remove();
+            }
+            list.array=["","","","","","","","","","","","","","","",""];
+            list.setnumber();
+            reStart.className='zoomOutDown animated';
+            res.className='fadeOut animated';
+            setTimeout(function () {
+                reStart.className='';
+                res.className='';
+                reStart.style.display='none';
+                res.style.display='none';
+            },1000)
+        }
+
+        if(e.innerText=='重来'){
+            state='';
+            list.scroe=0;
+            span.innerText='你的得分是：'+list.scroe;
+            var g2048=$('.g2048').children();
+            for(var i=16;i<g2048.length;i++){
+                g2048[i].remove();
+            }
+            list.array=["","","","","","","","","","","","","","","",""];
+            list.setnumber();
+            reStart.className='zoomOutDown animated';
+            res.className='fadeOut animated';
+            setTimeout(function () {
+                reStart.className='';
+                res.className='';
+                reStart.style.display='none';
+                res.style.display='none';
+            },1000)
+        }
+
+
+    }
+
 </script>
 </body>
 </html>
