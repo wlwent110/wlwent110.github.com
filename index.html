@@ -110,9 +110,9 @@
             border-radius:8%;
         }
 
-        .login:hover{
-            -webkit-animation:shake 0.25s;
-            background: lightblue;
+       .login:hover{
+           color: #a9014b;
+
         }
         .login-div{
             display: inline-block;
@@ -166,13 +166,21 @@
     <li class="list"><h1><a href="https://wlwent110.github.io/2048/new_2048.html">2048小游戏</a></h1></li>
 </ol>
 <script>
-
+    var userJSON=JSON.parse(localStorage.user)
+        function getJSON(k,jsonKey) {
+            var tempJSON=JSON.parse(localStorage[k]);
+            return tempJSON[jsonKey];
+        }
+        function setLocalStorage(k,json,jsonKey,jsonValue) {
+            json[jsonKey]=jsonValue;
+            localStorage[k]=JSON.stringify(json);
+        }
 
 
     function saveUser(name){
 
-        if( localStorage.userName.indexOf(name)<0){
-            localStorage.userName+='~'+name;
+        if( localStorage.user.indexOf(name)<0){
+            localStorage.user+='~'+name;
 
         }
 
@@ -186,16 +194,27 @@
     var loginDiv=document.querySelector('.login-div');
     var loginInfo=document.querySelector('.login-info');
     var checkUser=function () {
-        if(localStorage.userName==undefined){
-            localStorage.userName='';
+
+       /* if(localStorage.user==undefined){
+            localStorage.user='';
         }
-        if(localStorage.userName.indexOf('~',1)==-1&&localStorage.userName.indexOf('~')==0){
+        if(localStorage.user.indexOf('~',1)==-1&&localStorage.user.indexOf('~')==0){
 
             ul.style.display='none';
-            loginInfo.children[0].innerText=localStorage.userName.substring(1)+'大侠来啦';
+            loginInfo.children[0].innerText=localStorage.user.substring(1)+'大侠来啦';
             loginInfo.style.display='block';
         }
         else {
+            loginInfo.style.display='none';
+            ul.style.display='block';
+        }*/
+        if(localStorage.user!==undefined){
+            var userName=getJSON('user','name');
+            ul.style.display='none';
+            loginInfo.children[0].innerText=userName+'大侠来啦';
+            loginInfo.style.display='block';
+        }else {
+
             loginInfo.style.display='none';
             ul.style.display='block';
         }
@@ -212,7 +231,7 @@
 
         loginDiv.onmouseleave=function (e) {
             setTimeout(function () {
-                if(!window.localStorage.username){
+                if(!window.localStorage.user){
 
                     content.style.display='none';
                 }
@@ -223,8 +242,11 @@
     }
     span.onclick=function (e) {
         if(input.value!=='请输入昵称'&&input.value.match(/\S/g)){
-            saveUser(input.value);
-            loginInfo.children[0].innerText=input.value+'大侠来啦';
+
+            setLocalStorage('user',userJSON,'name',input.value);
+           /* saveUser(input.value);*/
+            loginInfo.children[0].innerText=getJSON('user','name')+'大侠来啦';
+            setLocalStorage('user',userJSON,'lastTime',getNowFormatDate());
             content.style.display='none';
             input.value='';
             ul.style.display='none';
@@ -253,7 +275,23 @@
             e.target.style.color='#aaa';
         }
     }
-
+        function getNowFormatDate() {
+            var date = new Date();
+            var seperator1 = "-";
+            var seperator2 = ":";
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+                + " " + date.getHours() + seperator2 + date.getMinutes()
+                + seperator2 + date.getSeconds();
+            return currentdate;
+        }
 </script>
 
 </body>
