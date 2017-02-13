@@ -53,7 +53,25 @@
             padding-left:20px;
             display: none;
             background-color: #454dff;
+            position: relative;
+            float: left;
 
+        }
+        .dialog{
+            display: none;
+            position: relative;
+            float: left;
+            height: 40px;
+           line-height: 40px;
+            padding: 0 10px;
+            border: 1px #bc330d solid;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 200;
+            background-color: #bc330d ;
+        }
+        .dialog:hover{
+            cursor: default;
         }
         .roll-text{
             transition: all 1000ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -90,7 +108,7 @@
             color: #aaa;
         }
         ul{
-            height: 32px;
+
             margin-bottom:0;
         }
         ul li{
@@ -141,7 +159,14 @@
         .list li{list-style:decimal; line-height:50px;border-bottom: 1px solid #f2f2f2;}
         .list li a:hover{text-indent:25px; border-radius:5px;color: #fff;text-shadow:0 2px 1px #360;background-color: #393;*background-color:#51a351;background-image:-moz-linear-gradient(top,#62c462,#51a351);background-image:-webkit-gradient(linear,0 0,0 100%,from(#62c462),to(#51a351));background-image:-webkit-linear-gradient(top,#62c462,#51a351);background-image:-o-linear-gradient(top,#62c462,#51a351);background-image:linear-gradient(to bottom,#62c462,#51a351);background-repeat:repeat-x;border-color:#51a351 #51a351 #387038;border-color:rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff62c462',endColorstr='#ff51a351',GradientType=0);filter:progid:DXImageTransform.Microsoft.gradient(enabled=false);text-decoration:none;}
         .list li h1 a:hover{ border-radius:5px;color: #fff;text-shadow:0 2px 1px #360;background-color: #393;*background-color:#51a351;background-image:-moz-linear-gradient(top,#62c462,#51a351);background-image:-webkit-gradient(linear,0 0,0 100%,from(#62c462),to(#51a351));background-image:-webkit-linear-gradient(top,#62c462,#51a351);background-image:-o-linear-gradient(top,#62c462,#51a351);background-image:linear-gradient(to bottom,#62c462,#51a351);background-repeat:repeat-x;border-color:#51a351 #51a351 #387038;border-color:rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff62c462',endColorstr='#ff51a351',GradientType=0);filter:progid:DXImageTransform.Microsoft.gradient(enabled=false);text-decoration:none;}
-
+        #item{
+            position: fixed;
+            top:10%;
+            width:100%;
+            left: 40%;
+        }
+        animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:both;animation-fill-mode:both}
+        @-webkit-keyframes zoomIn{0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}50%{opacity:1}}@keyframes zoomIn{0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);-ms-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}50%{opacity:1}}.zoomIn{-webkit-animation-name:zoomIn;animation-name:zoomIn}
     </style>
 
 
@@ -155,18 +180,34 @@
     <ul>
         <li class="anonymous-login  shake">匿名登录</li>
         <li class="third-login  shake">第三方登录</li>
+        <div style="clear:both;"></div>
     </ul>
     <div class="content">
         <div class="roll-text">这位蒙面大侠来留下你的脚印</div>
         <div class="roll-text "><input class="search" type="text" value="请输入昵称"> <span class="login logon">登录</span></div>
     </div>
+<div class="dialog">请输入2到4长度的中文</div>
+    <div class="sayHi"></div>
 </div>
-<ol class="list">
+<div id="item"><ol class="list">
     <li class="list"><h1><a href="https://wlwent110.github.io/danmu/index.html">弹幕墙</a></h1></li>
     <li class="list"><h1><a href="https://wlwent110.github.io/2048/new_2048.html">2048小游戏</a></h1></li>
-</ol>
+</ol></div>
+
 <script>
-    var userJSON=JSON.parse(localStorage.user)
+
+    try {
+        var userJSON=JSON.parse(localStorage.user);
+        var lasttime='您最后一次来访时间是'+userJSON.lastTime;
+        var highestScroe='你在2048的最高得分是'+userJSON.scroe+'分';
+    }catch (e)
+    {
+        userJSON={};
+        var lasttime='这是您第一次登录';
+        var  highestScroe='您还没有创造2048的记录，赶紧去超神';
+    }
+
+
         function getJSON(k,jsonKey) {
             var tempJSON=JSON.parse(localStorage[k]);
             return tempJSON[jsonKey];
@@ -185,7 +226,7 @@
         }
 
     }
-
+    var dialog=document.querySelector('.dialog');
     var input=document.querySelector('input');
     var span=document.querySelector('.logon');
     var content=document.querySelector('.content');
@@ -193,21 +234,33 @@
     var ul=document.querySelector('ul');
     var loginDiv=document.querySelector('.login-div');
     var loginInfo=document.querySelector('.login-info');
+    function sayHI() {
+        var sayHI=document.querySelector('.sayHi');
+        setTimeout(function () {
+            sayHI.style.display='block';
+            sayHI.innerText=lasttime;
+            sayHI.className='sayHI zoomIn';
+            setTimeout(function () {
+                sayHI.style.display='none'
+                sayHI.className='';
+                sayHI.innerText=highestScroe;
+
+                setTimeout(function () {
+                    sayHI.style.display='block';
+                    sayHI.className='sayHI zoomIn';
+                    setTimeout(function () {
+                        sayHI.style.display='none'
+                        sayHI.className='';
+                    },1000)
+                },1000)
+            },1000)
+
+        },1000)
+
+    }
+    sayHI();
     var checkUser=function () {
 
-       /* if(localStorage.user==undefined){
-            localStorage.user='';
-        }
-        if(localStorage.user.indexOf('~',1)==-1&&localStorage.user.indexOf('~')==0){
-
-            ul.style.display='none';
-            loginInfo.children[0].innerText=localStorage.user.substring(1)+'大侠来啦';
-            loginInfo.style.display='block';
-        }
-        else {
-            loginInfo.style.display='none';
-            ul.style.display='block';
-        }*/
         if(localStorage.user!==undefined){
             var userName=getJSON('user','name');
             ul.style.display='none';
@@ -231,17 +284,16 @@
 
         loginDiv.onmouseleave=function (e) {
             setTimeout(function () {
-                if(!window.localStorage.user){
 
-                    content.style.display='none';
-                }
+                content.style.display='none';
             },1500)
 
 
         }
     }
     span.onclick=function (e) {
-        if(input.value!=='请输入昵称'&&input.value.match(/\S/g)){
+
+        if(input.value.match( /^[\u4E00-\u9FA5]{2,4}$/)){
 
             setLocalStorage('user',userJSON,'name',input.value);
            /* saveUser(input.value);*/
@@ -252,17 +304,28 @@
             ul.style.display='none';
 
             loginInfo.style.display='block';
+        }else {
+          dialog.style.display='block';
+          input.value='';
+
         }
 
 
     }
+    input.onclick=function (e) {
+        if( dialog.style.display=='block'){
+            dialog.style.display='none';
+        }
 
+    }
+   
     input.onfocus=function (e) {
         document.onkeydown=function (e) {
             if(e.keyCode=='13'){
                 span.click();
             }
         }
+
 
         if(e.target.value=='请输入昵称'){
             e.target.value=''

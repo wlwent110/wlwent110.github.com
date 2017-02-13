@@ -112,6 +112,7 @@
     </style>
 </head>
 <body>
+
 <h3 id="score">分数：0</h3>
 <div class="g2048">
     <div class="cell"></div>
@@ -131,12 +132,14 @@
     <div class="cell"></div>
     <div class="cell"></div>
 </div>
+<h3>按 上、下、左、右移动</h3>
 <div class="replay">
     <div>
     <span id="reStart" >
         <span class="site__title mega button large blue">
             重来
         </span>
+        <a href="http://wlwent110.github.io"><span class="site__title mega button large blue">传送门</span></a>
         </span>
     </div>
     <div style="display: block">
@@ -150,13 +153,37 @@
 
 
 
-<button>开始</button>
+
 
 
 
 <script src="https://apps.bdimg.com/libs/jquery/1.8.1/jquery.min.js"></script>
 
 <script >
+    var res=document.querySelector('#result');
+    var reStart=document.querySelector('#reStart');
+
+    try{
+        var userJSON=JSON.parse(localStorage.user)
+        if(!userJSON.scroe){
+            userJSON.scroe=0;
+            setLocalStorage('user',userJSON,'scroe',0);
+        }
+    }catch (e){
+        res.children[0].style.color='#ff3b19'
+        res.children[0].innerText='您还未登录';
+        reStart.children[1].style.display='block';
+        reStart.children[0].style.display='none';
+        res.style.display='block';
+        reStart.style.display='block';
+        res.className='zoomIn animated';
+        reStart.className='fadeIn animated';
+    }
+
+    function setLocalStorage(k,json,jsonKey,jsonValue) {
+        json[jsonKey]=jsonValue;
+        localStorage[k]=JSON.stringify(json);
+    }
     var state;
     var span=document.querySelector('#score');
     var list={
@@ -214,6 +241,10 @@
                                 list.array[arr[j][i]]+=list.array[arr[j][i-1]];
                                 list.drawCell(arr[j][i],arr[j][i-1]);
                                 span.innerText='你的得分是：'+list.scroe;
+                                if(list.scroe>=userJSON.scroe){
+                                    setLocalStorage('user',userJSON,'scroe',list.scroe);
+                                }
+
                                 list.array[arr[j][i-1]]='';
                                 isMove = true;
                                 active();
@@ -241,6 +272,8 @@
                     res.children[0].innerText=state;
                     res.style.display='block';
                     reStart.style.display='block';
+                    reStart.children[1].style.display='none';
+                    reStart.children[0].style.display='block';
                     res.className='zoomIn animated';
                     reStart.className='fadeIn animated';
 
@@ -249,6 +282,8 @@
                     res.children[0].style.color='78FF1D'
                     res.children[0].innerText=state;
                     res.style.display='block';
+                    reStart.children[1].style.display='none';
+                    reStart.children[0].style.display='block';
                     reStart.style.display='block';
                     res.className='zoomIn animated';
                     reStart.className='fadeIn animated';
@@ -337,7 +372,9 @@
                 +list.array[num]+'</span></div> </div>';
         $(".g2048").append(item);
     }
+
     window.addEventListener('keydown', function (e) {
+
         if(state!=='抱歉失败了噢'){
             if (e.keyCode == 37) {
                 list.left();
@@ -358,8 +395,7 @@ list.setnumber();
 <script>
 
 
-    var res=document.querySelector('#result');
-    var reStart=document.querySelector('#reStart');
+
 
     document.onclick=function (e) {
 
