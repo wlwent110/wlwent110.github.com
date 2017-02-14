@@ -172,7 +172,7 @@
     }catch (e){
         res.children[0].style.color='#ff3b19'
         res.children[0].innerText='您还未登录';
-        reStart.children[1].style.display='block';
+        reStart.children[1].style.display='inline-block';
         reStart.children[0].style.display='none';
         res.style.display='block';
         reStart.style.display='block';
@@ -273,7 +273,7 @@
                     res.style.display='block';
                     reStart.style.display='block';
                     reStart.children[1].style.display='none';
-                    reStart.children[0].style.display='block';
+                    reStart.children[0].style.display='inline-block';
                     res.className='zoomIn animated';
                     reStart.className='fadeIn animated';
 
@@ -283,7 +283,7 @@
                     res.children[0].innerText=state;
                     res.style.display='block';
                     reStart.children[1].style.display='none';
-                    reStart.children[0].style.display='block';
+                    reStart.children[0].style.display='inline-block';
                     reStart.style.display='block';
                     res.className='zoomIn animated';
                     reStart.className='fadeIn animated';
