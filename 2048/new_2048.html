@@ -150,7 +150,7 @@
         </span>
     </div>
 </div>
-
+<button>试验</button>
 
 
 
@@ -403,22 +403,16 @@ list.setnumber();
         var e=e.target;
 
 
-        if(e.tagName=='BUTTON'){ list.scroe=0;
-            span.innerText='你的得分是：'+list.scroe;
-            var g2048=$('.g2048').children();
-            for(var i=16;i<g2048.length;i++){
-                g2048[i].remove();
-            }
-            list.array=["","","","","","","","","","","","","","","",""];
-            list.setnumber();
-            reStart.className='zoomOutDown animated';
-            res.className='fadeOut animated';
-            setTimeout(function () {
-                reStart.className='';
-                res.className='';
-                reStart.style.display='none';
-                res.style.display='none';
-            },1000)
+        if(e.tagName=='BUTTON'){
+            state='抱歉失败了噢';
+            res.children[0].style.color='#ff3b19'
+            res.children[0].innerText=state;
+            res.style.display='block';
+            reStart.style.display='block';
+            reStart.children[1].style.display='none';
+            reStart.children[0].style.display='inline-block';
+            res.className='zoomIn animated';
+            reStart.className='fadeIn animated';
         }
 
         if(e.innerText=='重来'){
@@ -443,6 +437,7 @@ list.setnumber();
 
 
     }
+
 
 </script>
 </body>
