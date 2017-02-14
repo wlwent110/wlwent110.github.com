@@ -156,10 +156,10 @@
 
 
 
-
 <script src="https://apps.bdimg.com/libs/jquery/1.8.1/jquery.min.js"></script>
 
 <script >
+
     var res=document.querySelector('#result');
     var reStart=document.querySelector('#reStart');
 
@@ -375,7 +375,8 @@
 
     window.addEventListener('keydown', function (e) {
 
-        if(state!=='抱歉失败了噢'){
+
+        if(state!=='抱歉失败了噢'&& userJSON!=undefined){
             if (e.keyCode == 37) {
                 list.left();
             } else if (e.keyCode == 38) {

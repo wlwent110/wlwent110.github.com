@@ -96,11 +96,7 @@
         .search:focus{
             width:200px;
         }
-        /* div{
-             position: relative;
 
-
-         }*/
         .content:hover .roll-text:first-child{
             margin-top:-40px;
         }
@@ -165,8 +161,32 @@
             width:100%;
             left: 40%;
         }
-        animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:both;animation-fill-mode:both}
-        @-webkit-keyframes zoomIn{0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}50%{opacity:1}}@keyframes zoomIn{0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);-ms-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}50%{opacity:1}}.zoomIn{-webkit-animation-name:zoomIn;animation-name:zoomIn}
+        ol.sayHi,ol.sayHi li
+        {
+            padding: 5px;
+            margin: 12px 0;
+            list-style: none;
+
+
+        }
+        ol.sayHi{
+            width: 374px;
+            margin-top: 40px;
+        }
+        ol.sayHi li{
+            display: none;
+            border: 1px solid #00ff00;
+            border-radius: 4px;
+            color: #fff;
+            background-color: #00ff00;
+        }
+
+        .animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:both;animation-fill-mode:both}
+        @-webkit-keyframes zoomIn{0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}50%{opacity:1}}
+        @keyframes zoomIn{0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);-ms-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}50%{opacity:1}}
+        .zoomIn{-webkit-animation-name:zoomIn;animation-name:zoomIn}
+
+    *{box-sizing: border-box;}
     </style>
 
 
@@ -187,7 +207,12 @@
         <div class="roll-text "><input class="search" type="text" value="请输入昵称"> <span class="login logon">登录</span></div>
     </div>
 <div class="dialog">请输入2到4长度的中文</div>
-    <div class="sayHi"></div>
+
+    <ol class="sayHi">
+        <li ></li>
+        <li ></li>
+    </ol>
+
 </div>
 <div id="item"><ol class="list">
     <li class="list"><h1><a href="https://wlwent110.github.io/danmu/index.html">弹幕墙</a></h1></li>
@@ -200,10 +225,11 @@
         var userJSON=JSON.parse(localStorage.user);
         var lasttime='您最后一次来访时间是'+userJSON.lastTime;
         var highestScroe='你在2048的最高得分是'+userJSON.scroe+'分';
+        setLocalStorage('user',userJSON,'lastTime',getNowFormatDate());
     }catch (e)
     {
         userJSON={};
-        var lasttime='这是您第一次登录';
+        var lasttime='这是您第一次来访';
         var  highestScroe='您还没有创造2048的记录，赶紧去超神';
     }
 
@@ -234,37 +260,35 @@
     var ul=document.querySelector('ul');
     var loginDiv=document.querySelector('.login-div');
     var loginInfo=document.querySelector('.login-info');
-    function sayHI() {
-        var sayHI=document.querySelector('.sayHi');
-        setTimeout(function () {
-            sayHI.style.display='block';
-            sayHI.innerText=lasttime;
-            sayHI.className='sayHI zoomIn';
-            setTimeout(function () {
-                sayHI.style.display='none'
-                sayHI.className='';
-                sayHI.innerText=highestScroe;
+    var sayHI=document.querySelector('.sayHi');
 
-                setTimeout(function () {
-                    sayHI.style.display='block';
-                    sayHI.className='sayHI zoomIn';
-                    setTimeout(function () {
-                        sayHI.style.display='none'
-                        sayHI.className='';
-                    },1000)
-                },1000)
-            },1000)
+    setTimeout(function () {
+        sayHI.children[0].style.display='none';
+        sayHI.children[0].innerText=lasttime;
 
-        },1000)
+        sayHI.children[0].style.display='block';
 
-    }
-    sayHI();
+        sayHI.children[0].className='sayHi zoomIn animated';
+           setTimeout(function () {
+               sayHI.children[1].style.display='none';
+               sayHI.children[1].innerText=highestScroe;
+
+               sayHI.children[1].style.display='block';
+
+               sayHI.children[1].className='sayHi zoomIn animated';
+           },2000)
+    },500)
+
+
+
+
     var checkUser=function () {
 
         if(localStorage.user!==undefined){
             var userName=getJSON('user','name');
             ul.style.display='none';
             loginInfo.children[0].innerText=userName+'大侠来啦';
+            setLocalStorage('user',userJSON,'lastTime',getNowFormatDate());
             loginInfo.style.display='block';
         }else {
 
@@ -340,19 +364,35 @@
     }
         function getNowFormatDate() {
             var date = new Date();
-            var seperator1 = "-";
+
             var seperator2 = ":";
             var month = date.getMonth() + 1;
             var strDate = date.getDate();
+            var hours,minutes,seconds;
             if (month >= 1 && month <= 9) {
                 month = "0" + month;
             }
             if (strDate >= 0 && strDate <= 9) {
                 strDate = "0" + strDate;
             }
-            var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-                + " " + date.getHours() + seperator2 + date.getMinutes()
-                + seperator2 + date.getSeconds();
+            if (date.getHours() >= 0 && date.getHours() <= 9) {
+                hours = "0" + date.getHours();
+            }else {
+                hours=date.getHours();
+            }
+            if (date.getMinutes() >= 0 && date.getMinutes() <= 9) {
+                minutes = "0" + date.getMinutes();
+            }else {
+                minutes=date.getMinutes();
+            }
+            if (date.getSeconds() >= 0 && date.getSeconds() <= 9) {
+                seconds = "0" + date.getSeconds();
+            }else {
+                seconds=date.getSeconds();
+            }
+            var currentdate = date.getFullYear() + '年' + month + '月' + strDate+'日'
+                + " " + hours + seperator2 + minutes
+                + seperator2 + seconds;
             return currentdate;
         }
 </script>
