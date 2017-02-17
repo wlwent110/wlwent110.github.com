@@ -93,9 +93,9 @@
             padding:0;
             -webkit-transition:width 0.5s;
         }
-        .search:focus{
+        /*.search:hover{
             width:200px;
-        }
+        }*/
 
         .content:hover .roll-text:first-child{
             margin-top:-40px;
@@ -186,7 +186,12 @@
         @-webkit-keyframes zoomIn{0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}50%{opacity:1}}
         @keyframes zoomIn{0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);-ms-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}50%{opacity:1}}
         .zoomIn{-webkit-animation-name:zoomIn;animation-name:zoomIn}
+    .message{
+        line-height: 50px;
+        color: #e653d0;
+        display: none;
 
+    }
     *{box-sizing: border-box;}
     </style>
 
@@ -200,7 +205,7 @@
     </div>
     <ul>
         <li class="anonymous-login  shake">匿名登录</li>
-        <li class="third-login  shake">第三方登录</li>
+        <li class="third-login  shake">第三方登录</li> <span class="message zoomIn animated">暂时还不支持哟</span>
         <div style="clear:both;"></div>
     </ul>
     <div class="content">
@@ -216,8 +221,12 @@
 
 </div>
 <div id="item"><ol class="list">
-    <li class="list"><h1><a href="https://wlwent110.github.io/danmu">弹幕墙</a></h1></li>
+    <li class="list"><h1><a href="https://wlwent110.github.io/cv">个人简历</a></h1></li>
+    <li class="list"><h1><a href="https://wlwent110.github.io/danmu">FCC_弹幕墙</a></h1></li>
+    <li class="list"><h1><a href="https://wlwent110.github.io/Show-the-Local-Weather">FCC_天气预报</a></h1></li>
     <li class="list"><h1><a href="https://wlwent110.github.io/2048">2048小游戏</a></h1></li>
+    <li class="list"><h1><a href="https://wlwent110.github.io/drag-demo">IFE_界面拖拽</a></h1></li>
+    <li class="list"><h1><a href="https://wlwent110.github.io/to-do-list">IFE_to-do-list</a></h1></li>
 </ol></div>
 <script>
 
@@ -254,9 +263,10 @@
     }
     var dialog=document.querySelector('.dialog');
     var input=document.querySelector('input');
-    var span=document.querySelector('.logon');
+
     var content=document.querySelector('.content');
-    var anonymousLogin=document.querySelector('.anonymous-login');
+
+    var message=document.querySelector('.message');
     var ul=document.querySelector('ul');
     var loginDiv=document.querySelector('.login-div');
     var loginInfo=document.querySelector('.login-info');
@@ -279,8 +289,35 @@
            },2000)
     },500)
 
+    document.onclick=function (e) {
+        var e=e.target;
+        if(e.innerText=='第三方登录'){
+            message.style.display='inline-block'
+            setTimeout(function () {
+                message.style.display='none';
+            },2000)
+        }
+        if(e.innerText=='退出'){
+            loginInfo.style.display='none';
+            ul.style.display='block';
+        }
+        if(e.innerText=='匿名登录'){
+            content.style.display='block';
+
+            loginDiv.onmouseleave=function (e) {
+                setTimeout(function () {
+
+                    content.style.display='none';
+                },1500)
 
 
+            }
+        }
+        if(e.innerText=='登录'){
+            anonymous_login();
+        }
+
+    }
 
     var checkUser=function () {
 
@@ -297,64 +334,52 @@
         }
     }
     checkUser();
-    loginInfo.children[1].onclick=function (e) {
-        loginInfo.style.display='none';
-        ul.style.display='block';
 
-    }
-    anonymousLogin.onclick=function (e) {
+   function anonymous_login() {
+       if(input.value.match( /^[\u4E00-\u9FA5]{2,4}$/)){
 
-        content.style.display='block';
-
-        loginDiv.onmouseleave=function (e) {
-            setTimeout(function () {
-
-                content.style.display='none';
-            },1500)
-
-
-        }
-    }
-    span.onclick=function (e) {
-
-        if(input.value.match( /^[\u4E00-\u9FA5]{2,4}$/)){
-
-            setLocalStorage('user',userJSON,'name',input.value);
+           setLocalStorage('user',userJSON,'name',input.value);
            /* saveUser(input.value);*/
-            loginInfo.children[0].innerText=getJSON('user','name')+'大侠来啦';
-            setLocalStorage('user',userJSON,'lastTime',getNowFormatDate());
-            content.style.display='none';
-            input.value='';
-            ul.style.display='none';
+           loginInfo.children[0].innerText=getJSON('user','name')+'大侠来啦';
+           setLocalStorage('user',userJSON,'lastTime',getNowFormatDate());
+           content.style.display='none';
+           input.value='';
+           ul.style.display='none';
 
-            loginInfo.style.display='block';
-        }else {
-          dialog.style.display='block';
-          input.value='';
+           loginInfo.style.display='block';
+       }else {
+           dialog.style.display='block';
+           dialog.className='dialog zoomIn animated';
+           input.value='';
+           setTimeout(function () {
+               dialog.style.display='none';
+               dialog.className='dialog';
+           },1500)
 
-        }
+       }
+   }
 
 
+    content.children[1].onmouseenter=function () {
+        input.style.width='180px';
     }
-    input.onclick=function (e) {
-        if( dialog.style.display=='block'){
-            dialog.style.display='none';
-        }
-
+    content.children[1].onmouseleave=function () {
+        input.style.width='96px';
     }
-   
+
     input.onfocus=function (e) {
+
         document.onkeydown=function (e) {
             if(e.keyCode=='13'){
-                span.click();
+                anonymous_login();
+            }
+            if(e.target.value=='请输入昵称'){
+                e.target.value=''
+                e.target.style.color='#000';
             }
         }
 
 
-        if(e.target.value=='请输入昵称'){
-            e.target.value=''
-            e.target.style.color='#000';
-        }
     }
     input.onblur=function (e) {
         if(e.target.value==''){
